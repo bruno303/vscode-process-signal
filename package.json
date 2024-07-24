@@ -1,8 +1,13 @@
 {
   "name": "vscode-process-signal",
-  "displayName": "vscode-process-signal",
+  "displayName": "VSCode Process Signal",
   "description": "Simple way to send signals to vscode child processes",
   "version": "0.0.1",
+  "publisher": "bruno-oliveira-812",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bruno303/vscode-process-signal"
+  },
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -15,7 +20,7 @@
     "commands": [
       {
         "command": "vscode-process-signal.sendSignal",
-        "title": "Send Signal to Process"
+        "title": "Process Signal: Send Signal to Process"
       }
     ],
     "keybindings": [

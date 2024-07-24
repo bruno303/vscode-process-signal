@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
-import * as cp from 'child_process'
+import * as cp from 'child_process';
 
 type ProcessInfo = {
 	pid: number,
 	ppid: number,
 	command: string
-}
+};
 
 const command = "ps -e -o pid,ppid,command";
 
@@ -28,11 +28,11 @@ function filterProcesses(processes: ProcessInfo[]): ProcessInfo[] {
 	// Filter processes where PPID matches VSCode's PID
 	const vscodePid = process.pid;
 	let childProcesses = processes.filter(p => p.ppid === vscodePid);
-	let allProcesses: ProcessInfo[] = []
+	let allProcesses: ProcessInfo[] = [];
 	allProcesses.push(...childProcesses);
 
 	// filter childs of childs processes
-	let hasProcess = childProcesses.length > 0
+	let hasProcess = childProcesses.length > 0;
 	while (hasProcess) {
 		childProcesses = childProcesses.flatMap(child => processes.filter(p => p.ppid === child.pid));
 		allProcesses.push(...childProcesses);
@@ -40,7 +40,7 @@ function filterProcesses(processes: ProcessInfo[]): ProcessInfo[] {
 	}
 
 	// remove the ps command itself
-	return allProcesses.filter(p => p.command.indexOf(command) == -1);
+	return allProcesses.filter(p => p.command.indexOf(command) === -1);
 }
 
 function parseProcesses(stdout: string): ProcessInfo[] {
@@ -89,6 +89,7 @@ function showSignalQuickPick(pid: number): void {
 
 function killProcess(pid: number, signal: string) {
     process.kill(pid, signal);
+    vscode.window.showInformationMessage(`Signal ${signal} sent to process ${pid}`);
 }
 
 export function deactivate() {}
